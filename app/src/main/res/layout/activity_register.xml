@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundfit"
-    tools:context=".Login" >
-
+    tools:context=".Register">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -26,9 +25,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             app:srcCompat="@drawable/eatapp_logo" />
-
         <EditText
-            android:id="@+id/login_activity_email_edit_text"
+            android:id="@+id/register_activity_user_edit_text"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="24dp"
+            android:drawableLeft="@drawable/ic_action_user"
+            android:ems="10"
+            android:hint="User name"
+            android:textColor="@color/black"
+            android:textColorHint="#150E0E" />
+        <EditText
+            android:id="@+id/register_activity_email_edit_text"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -42,14 +52,14 @@
             android:textColorHint="#150E0E" />
 
         <EditText
-            android:id="@+id/login_activity_password_edit_text"
+            android:id="@+id/register_activity_password_edit_text"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
 
-            android:drawableLeft="@drawable/ic_action_password"
+            android:drawableLeft="@drawable/ic_action_key"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
@@ -57,7 +67,7 @@
             android:textColorHint="#150E0E" />
 
         <Button
-            android:id="@+id/Login"
+            android:id="@+id/register_newaccount_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -65,35 +75,9 @@
             android:layout_marginTop="25dp"
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
-            android:text="Login"
+            android:text="Register"
             app:backgroundTint="#306A98" />
 
-        <TextView
-            android:id="@+id/login_activity_no_account_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="24dp"
-
-
-            android:cursorVisible="false"
-            android:text="Dont have an account?"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/Regesrer_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
-            android:text="Regesrer"
-            app:backgroundTint="#306A98" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
