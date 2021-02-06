@@ -57,7 +57,7 @@
             android:textColorHint="#150E0E" />
 
         <Button
-            android:id="@+id/Login"
+            android:id="@+id/login_activty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -93,6 +93,22 @@
             android:layout_marginRight="25dp"
             android:text="Regesrer"
             app:backgroundTint="#306A98" />
+        <ProgressBar
+            android:id="@+id/Login_activity_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.8"
+            android:background="#1A4157"
+            android:hapticFeedbackEnabled="false"
+            android:padding="150dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
     </LinearLayout>
 
 
