@@ -4,10 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/postListFragment">
-
     <fragment
         android:id="@+id/postListFragment"
-        android:name="com.example.eat.fragment.PostListFragment"
+        android:name="com.example.eat.PostListFragment"
         android:label="fragment_post_list"
         tools:layout="@layout/fragment_post_list" />
+    <activity
+        android:id="@+id/login"
+        android:name="com.example.eat.Login"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/register"
+        android:name="com.example.eat.Register"
+        android:label="activity_register"
+        tools:layout="@layout/activity_register" />
 </navigation>
