@@ -7,15 +7,23 @@ import java.util.List;
 
 public class Model {
 
-    List<Post> data;
     public final static Model Instance=new Model();
     public static Model instance;
     ModelFirebase modelFirebase=new ModelFirebase();
 
-    public LiveData<List<Post>>getAllPosts(){
-        LiveData<List<Post> >Data = AppLocalDb.db.PostDao().getAllPosts();
+    private Model(){
+    }
 
-        return Data;
+    LiveData<List<Post>> data;
+
+    public LiveData<List<Post>> getAllPosts(){
+        data = AppLocalDb.db.PostDao().getAllPosts();
+        return data;
+    }
+
+    void addPost(Post post){
+
+        AppLocalDb.db.PostDao().insertAllPosts(post);
     }
 
 

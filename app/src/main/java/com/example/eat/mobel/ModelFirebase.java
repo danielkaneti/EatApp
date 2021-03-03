@@ -1,37 +1,23 @@
 package com.example.eat.mobel;
 
 
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.eat.EatAppApplication;
-import com.example.eat.Register;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 public class ModelFirebase {
 
     final static String POST_COLLECTION = "posts";
-
-
 
     public interface Listener<T> {
         void onComplete();
@@ -58,11 +44,6 @@ public class ModelFirebase {
 
 
     }
-
-
-
-
-
 
     public static String getCurrentUserId() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();

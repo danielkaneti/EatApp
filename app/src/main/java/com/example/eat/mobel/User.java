@@ -1,7 +1,5 @@
 package com.example.eat.mobel;
 
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -19,7 +17,6 @@ public class User implements Serializable {
     }
     public User(String Name,String email) {
         this.Username = Name;
-
         this.userEmail=email;
 
     }

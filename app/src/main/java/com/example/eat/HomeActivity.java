@@ -11,17 +11,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.eat.fragments.PostListFragment;
 
 public class HomeActivity extends AppCompatActivity {
-    NavController navCtrl;
+    NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        navCtrl = Navigation.findNavController(this,R.id.home_nav_host);
-        NavigationUI.setupActionBarWithNavController(this,navCtrl);
+        navController = Navigation.findNavController(this,R.id.homeActivity_navHostfragment);
+        NavigationUI.setupActionBarWithNavController(this,navController);
 
         PostListFragment postList = new PostListFragment();
         FragmentManager manager = getSupportFragmentManager();
@@ -29,18 +29,20 @@ public class HomeActivity extends AppCompatActivity {
         tran.add(R.id.home_frg_container,postList);
         tran.commit();
 
-        BottomNavigationView bottomNavigationView=findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemReselectedListener(navListener);
 
-        //
+
+        //BottomNavigationView bottomNavigationView=findViewById(R.id.bottomNavigationView);
+        //bottomNavigationView.setOnNavigationItemReselectedListener(navListener);
 
     }
 
-    private BottomNavigationView.OnNavigationItemReselectedListener navListener =
-            new BottomNavigationView.OnNavigationItemReselectedListener() {
-                @Override
-                public void onNavigationItemReselected(@NonNull MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            navController.navigateUp();
+            return true;
+        }
+            return super.onOptionsItemSelected(item);
 
-                }
-            };
+    }
 }
