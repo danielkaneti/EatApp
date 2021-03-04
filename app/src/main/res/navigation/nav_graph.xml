@@ -3,23 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainActivity">
+    app:startDestination="@id/postListFragment2">
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.eat.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
-    <activity
-        android:id="@+id/login"
-        android:name="com.example.eat.Login"
-        android:label="activity_login"
-        tools:layout="@layout/activity_login" />
-    <activity
-        android:id="@+id/register"
-        android:name="com.example.eat.Register"
-        android:label="activity_register"
-        tools:layout="@layout/activity_register" />
     <fragment
         android:id="@+id/postFragment"
         android:name="com.example.eat.fragments.PostFragment"

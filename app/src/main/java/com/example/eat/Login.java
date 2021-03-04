@@ -73,8 +73,6 @@ public class Login extends AppCompatActivity  {
 
     }
 
-
-
     private void toRegisterPage() {
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
