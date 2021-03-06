@@ -1,5 +1,6 @@
 package com.example.eat.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.eat.HomeActivity;
+import com.example.eat.Login;
 import com.example.eat.R;
 import com.example.eat.adapters.PostsAdapter;
 import com.example.eat.mobel.Model;
@@ -56,7 +59,14 @@ public class PostListFragment extends Fragment {
         //pb.setVisibility(View.INVISIBLE);
 
         FloatingActionButton addBtn = view.findViewById ( R.id.postlistfrag_AddPostBtn );
-        addBtn.setOnClickListener ( Navigation.createNavigateOnClickListener ( R.id.action_postDetails_to_postList ) );
+        addBtn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Navigation.findNavController(view).navigate(R.id.action_postDetails_to_postList);
+    }
+    });
+
+
         return view;
     }
 

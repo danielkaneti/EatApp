@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/postListFragment2">
+    app:startDestination="@id/postFragment">
 
     <fragment
         android:id="@+id/postFragment"
@@ -20,9 +20,6 @@
         android:name="com.example.eat.fragments.PostListFragment"
         android:label="fragment_post_list"
         tools:layout="@layout/fragment_post_list" >
-        <action
-            android:id="@+id/actiom_postList_toaddpost"
-            app:destination="@id/postFragment" />
         <action
             android:id="@+id/action_postList_to_postDetails"
             app:destination="@id/postDetailsFragment" />
