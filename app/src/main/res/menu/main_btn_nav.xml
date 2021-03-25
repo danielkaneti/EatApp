@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <item
         android:id="@+id/list"
         android:icon="@drawable/ic_action_home"
-        android:title="Feed" />
+        android:title="Feed"
+        app:showAsAction="never" />
     <item
         android:id="@+id/post"
         android:icon="@drawable/ic_action_add"
-        android:title="Post" />
+        android:title="Post"
+        app:showAsAction="never" />
     <item
-       android:id="@+id/profile"
+        android:id="@+id/profile"
         android:icon="@drawable/ic_action_user"
-        android:title="Profile" />
+        android:title="Profile"
+        app:showAsAction="never" />
 </menu>

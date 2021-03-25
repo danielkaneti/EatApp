@@ -9,7 +9,8 @@ import com.example.eat.EatAppApplication;
 
 @Database(entities = {Post.class}, version = 1)
 abstract class AppLocalDbRepository extends RoomDatabase {
-    public abstract PostDao PostDao();
+
+    public abstract PostDao postDao();
 }
 class AppLocalDb {
     static public AppLocalDbRepository db =
