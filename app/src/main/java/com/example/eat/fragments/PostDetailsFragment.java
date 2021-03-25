@@ -25,7 +25,7 @@ public class PostDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_post_details, container, false);
         Button backBtn = view.findViewById(R.id.postdetailsfrag_back_btn);
-        backBtn.setOnClickListener ( Navigation.createNavigateOnClickListener ( R.id.action_postDetails_to_postList ) );
+        //backBtn.setOnClickListener ( Navigation.createNavigateOnClickListener ( R.id.action_postDetails_to_postList ) );
         return view;
     }
 }

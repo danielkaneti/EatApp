@@ -6,14 +6,8 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
-import com.example.eat.fragments.PostDetailsFragment;
-import com.example.eat.fragments.PostFragment;
 import com.example.eat.fragments.PostListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -49,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
 
             switch (item.getItemId()){
                 case R.id.post:
-                    selectedd=new PostFragment();
+
                     break;
                 case R.id.profile:
 
