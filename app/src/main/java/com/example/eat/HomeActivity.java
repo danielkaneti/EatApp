@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
                     selectedd=new PostFragment();
                     break;
                 case R.id.profile:
-                    selectedd=new PostDetailsFragment();
+
                     break;
                 case R.id.list:
                     selectedd=new PostListFragment();

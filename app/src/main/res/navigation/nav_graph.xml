@@ -14,6 +14,9 @@
             android:id="@+id/action_postFragment_pop"
             app:popUpTo="@id/postListFragment2"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_postFragment_to_postListFragment2"
+            app:destination="@id/postListFragment2" />
     </fragment>
     <fragment
         android:id="@+id/postListFragment2"

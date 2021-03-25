@@ -2,141 +2,131 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/postfrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundfit"
-    tools:context=".fragments.PostFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:background="#1A4157"
+    tools:context=".fragments.PostFragment" >
 
     <TextView
-        android:id="@+id/new_post_textv"
+        android:id="@+id/new_post_fragment_header_text_view"
         android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:cursorVisible="false"
-        android:text="add a new post"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="New Post"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/new_post_fragment_title_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="#214F68"
+        android:ems="10"
+        android:hint="Title"
+        android:inputType="textPersonName"
+        android:padding="6dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#CDCDCD"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_post_fragment_header_text_view" />
+
+    <EditText
+        android:id="@+id/new_post_fragment_content_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="#214F68"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="write your post here..."
+        android:inputType="textMultiLine"
+        android:padding="6dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#CDCDCD"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_post_fragment_title_edit_text" />
+
+    <EditText
+        android:id="@+id/new_post_fragment_contact_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="#214F68"
+        android:ems="10"
+        android:hint="Contact"
+        android:inputType="textPersonName"
+        android:padding="6dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#CDCDCD"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_post_fragment_content_edit_text" />
+
+    <Button
+        android:id="@+id/new_post_fragment_publish_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="#3BBFBF"
+        android:text="Publish"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_post_fragment_image_view" />
+
     <ImageView
-        android:id="@+id/addpost_img_v"
+        android:id="@+id/new_post_fragment_image_view"
         android:layout_width="0dp"
-        android:layout_height="290dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/e44c577196d295eb166d7455078f5ca9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_post_textv" />
-
-    <ImageButton
-        android:id="@+id/addpost_edit_img_btn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#00FFFFFF"
-        android:scaleType="fitXY"
-        android:src="@android:drawable/ic_menu_edit"
-        app:layout_constraintBottom_toBottomOf="@+id/addpost_img_v"
-        app:layout_constraintEnd_toEndOf="@+id/addpost_img_v" />
-
-    <TextView
-        android:id="@+id/addpost_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="237dp"
         android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="32dp"
-        android:text="TITLE:"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addpost_img_v" />
-
-    <TextView
-        android:id="@+id/addpost_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="32dp"
-        android:text="INFO"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addpost_title" />
-
-    <EditText
-        android:id="@+id/newpost_title_et"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/addpost_title"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/add_photo_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addpost_title"
-        app:layout_constraintTop_toTopOf="@+id/addpost_title" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_post_fragment_contact_edit_text" />
 
-    <EditText
-        android:id="@+id/newpost_info_et"
+    <ProgressBar
+        android:id="@+id/new_post_fragment_progress_bar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/addpost_info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addpost_info"
-        app:layout_constraintTop_toTopOf="@+id/addpost_info" />
-
-    <Button
-        android:id="@+id/postlistfrag_AddPostBtn"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="SAVE"
+        android:layout_height="0dp"
+        android:alpha="0.8"
+        android:background="#1A4157"
+        android:hapticFeedbackEnabled="false"
+        android:padding="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/postlistfrag_cencelBtn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/postlistfrag_cencelBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="CANCEL"
-        app:layout_constraintBottom_toBottomOf="@+id/postlistfrag_AddPostBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/postlistfrag_AddPostBtn"
-        app:layout_constraintTop_toTopOf="@+id/postlistfrag_AddPostBtn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+

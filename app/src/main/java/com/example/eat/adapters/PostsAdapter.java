@@ -15,6 +15,7 @@ import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostViewHolder>{
     public LiveData<List<Post>> data;
+
     private OnItemClickListener listener;
     LayoutInflater inflater;
 

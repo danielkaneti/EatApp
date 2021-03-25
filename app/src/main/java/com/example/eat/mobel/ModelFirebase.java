@@ -31,8 +31,9 @@ public class ModelFirebase {
     final static String POST_COLLECTION = "posts";
 
     public static void addPost(Post post, Model.Listener<Boolean> listener) {
+        listener.onComplete(null);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(POST_COLLECTION).document(post.getPostid()).set(toJson(post)).addOnCompleteListener(new OnCompleteListener<Void>() {
+        db.collection("test").document(post.getPostid()).set(toJson(post)).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (listener!=null){
@@ -92,6 +93,9 @@ public class ModelFirebase {
             }
         });
     }
+
+
+
     public interface Listener<T> {
         void onComplete();
         void onFail();
