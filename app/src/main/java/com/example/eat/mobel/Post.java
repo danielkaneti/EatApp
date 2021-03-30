@@ -16,11 +16,10 @@ public class Post implements Serializable {
     public String postImgUrl;
     public String userId;
     public String username;
-    public String contact;
     public long lastUpdated;
 
 //seters
-    public void setPostid(String postid) {
+    public void setPostid(@NonNull String postid) {
         this.postid = postid;
     }
     public void setPostinfo(String postinfo) {
@@ -37,9 +36,6 @@ public class Post implements Serializable {
     }
     public void setUsername(String username) {
         this.username = username;
-    }
-    public void setContact(String contact) {
-        this.contact = contact;
     }
     public void setLastUpdated(long lastUpdated) {
         this.lastUpdated = lastUpdated;
@@ -63,9 +59,6 @@ public class Post implements Serializable {
     public String getUsername() {
         return username;
     }
-    public String getContact() {
-        return contact;
-    }
     public long getLastUpdated() {
         return lastUpdated;
     }
@@ -76,6 +69,23 @@ public class Post implements Serializable {
     //constructors
 
 
+    public Post ( @NonNull String postid , String postinfo , String posttitle , String postImgUrl , String userId , String username , long lastUpdated ) {
+        this.postid = postid;
+        this.postinfo = postinfo;
+        this.posttitle = posttitle;
+        this.postImgUrl = postImgUrl;
+        this.userId = userId;
+        this.username = username;
+        this.lastUpdated = lastUpdated;
+    }
 
-
+    public Post(){
+        postid = "";
+        posttitle = "";
+        postinfo = "";
+        postImgUrl = "";
+        userId = "";
+        username = "";
+        lastUpdated =0;
+    }
 }
