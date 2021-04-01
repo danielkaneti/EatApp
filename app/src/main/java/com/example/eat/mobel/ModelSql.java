@@ -10,24 +10,24 @@ public class ModelSql {
     public interface GetAllPostListener {
         void onComplete(List<Post> data);
     }
-    public void getAllPost(final Model.GetAllPostListener listener){
-        class MyAsyncTask extends AsyncTask{
-            List<Post> data;
-            @Override
-            protected Object doInBackground ( Object[] objects ) {
-                data = AppLocalDb.db.postDao().getAll();
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute ( Object o ) {
-                super.onPostExecute (o);
-                listener.onComplete ( data );
-            }
-        }
-        MyAsyncTask task = new MyAsyncTask ( );
-        task.execute ();
-    }
+//    public void getAllPost(final Model.GetAllPostListener listener){
+//        class MyAsyncTask extends AsyncTask{
+//            List<Post> data;
+//            @Override
+//            protected Object doInBackground ( Object[] objects ) {
+//                data = AppLocalDb.db.postDao().getAll();
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute ( Object o ) {
+//                super.onPostExecute (o);
+//                listener.onComplete ( data );
+//            }
+//        }
+//        MyAsyncTask task = new MyAsyncTask ( );
+//        task.execute ();
+//    }
     public interface AddPostListener{
         void onComplete();
     }

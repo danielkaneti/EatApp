@@ -19,16 +19,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         navController = Navigation.findNavController(this,R.id.homeActivity_navHostfragment);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        //bottomNavigationView.setOnNavigationItemSelectedListener(navigationitemSelecedLisener);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.home_frg_container, new PostListFragment()).commit();
+
         NavigationUI.setupWithNavController (bottomNavigationView,navController);
 
-
-        //PostListFragment postList = new PostListFragment();
-        //FragmentManager manager = getSupportFragmentManager();
-        //FragmentTransaction tran = manager.beginTransaction();
-        //tran.add(R.id.home_frg_container,postList);
-        //tran.commit();
 
 
     }

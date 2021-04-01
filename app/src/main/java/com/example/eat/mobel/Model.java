@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.eat.EatAppApplication;
 
 import java.util.List;
@@ -28,6 +30,9 @@ public class Model {
         void onComplete(T data);
     }
 
+
+
+
     public interface GetAllPostListener {
         void onComplete(List<Post> data);
     }
@@ -36,8 +41,8 @@ public class Model {
 //
 //    }
 
-    public List<Post> getAllPost(){
-        List<Post> liveData = AppLocalDb.db.postDao().getAll();
+    public LiveData<List<Post>> getAllPost(){
+        LiveData<List<Post>> liveData = AppLocalDb.db.postDao().getAll();
         refreshPostsList(null);
         return liveData;
     }

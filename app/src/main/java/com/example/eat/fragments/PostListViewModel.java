@@ -1,5 +1,6 @@
 package com.example.eat.fragments;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.eat.mobel.Model;
@@ -9,11 +10,11 @@ import java.util.List;
 
 public class PostListViewModel extends ViewModel {
 
-    List<Post> liveData;
+    LiveData<List<Post>> liveData;
 
-    public List<Post> getData ( ) {
+    public LiveData<List<Post> >getData ( ) {
         if (liveData == null)
-            liveData = Model.instance.getAllPost ( );
+            liveData = Model.instance.getAllPost( );
         return liveData;
     }
 
