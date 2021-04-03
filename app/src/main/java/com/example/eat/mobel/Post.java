@@ -75,25 +75,28 @@ public class Post implements Serializable {
 
     //constructors
 
-    public Post(){
-        postid="";
-        postImgUrl="";
-        postinfo="";
-        posttitle="";
-        userId="";
-        username="";
-        contact="";
-        lastUpdated=0;
-    }
-    public Post(String postId, String postTitle, String postContent, String postImgUrl, String userId, String userProfilePicUrl, String username, String contact){
-        this.postid = postId;
-        this.posttitle = postTitle;
-        this.postinfo = postContent;
+
+
+    public Post ( @NonNull String postid , String postinfo , String posttitle , String postImgUrl , String userId , String username , long lastUpdated ) {
+        this.postid = postid;
+        this.postinfo = postinfo;
+        this.posttitle = posttitle;
         this.postImgUrl = postImgUrl;
         this.userId = userId;
-
         this.username = username;
-        this.contact = contact;
+        this.lastUpdated = lastUpdated;
     }
+
+    public Post(){
+        postid = "";
+        posttitle = "";
+        postinfo = "";
+        postImgUrl = "";
+        userId = "";
+        username = "";
+        lastUpdated =0;
+    }
+
+
 
 }

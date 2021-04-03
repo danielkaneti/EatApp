@@ -4,83 +4,47 @@ package com.example.eat.mobel;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-
-import com.example.eat.EatAppApplication;
 
 import java.util.List;
 
 public class Model {
 
-    public final static Model Instance=new Model();
-    public static Model instance;
+//    public final static Model Instance=new Model();
+//    public static Model instance;
     ModelFirebase modelFirebase=new ModelFirebase();
+    ModelSql modelSql=new ModelSql();
+    public  final static Model instance=new Model();
+
 
     private Model(){
     }
-    @SuppressLint("StaticFieldLeak")
-    public void addPost(final Post post, Listener<Boolean> listener) {
-        ModelFirebase.addPost(post,listener);
-        new AsyncTask<String,String,String>(){
-            @Override
-            protected String doInBackground(String... strings) {
-                AppLocalDb.db.postDao().insertAllPosts(post);
-                return "";
-            }
-        }.execute();
-    }
-    @SuppressLint("StaticFieldLeak")
-    private void cleanLocalDb(){
-        ModelFirebase.getDeletedPostsId(new Listener<List<String>>() {
-            @Override
-            public void onComplete(final List<String> data) {
-                new AsyncTask<String,String,String>() {
-                    @Override
-                    protected String doInBackground(String... strings) {
-                        for (String id: data){
-                            Log.d("TAG", "deleted id: " + id);
-                            AppLocalDb.db.postDao().deleteByPostId(id);
-                        }
-                        return "";
-                    }
-                }.execute("");
-            }
-        });
-    }
-    public void refreshPostsList(final CompListener listener){
 
+
+
+    public interface GetAllPostListener {
+        void onComplete(List<Post> data);
+    }
+    public void getAllPost(final GetAllPostListener listener){
+        modelFirebase.getAllPost(listener);
 
     }
-    @SuppressLint("StaticFieldLeak")
-    public void deletePost(final Post post, Listener<Boolean> listener){
-        ModelFirebase.deletePost(post,listener);
-        new AsyncTask<String,String,String>(){
-            @Override
-            protected String doInBackground(String... strings) {
-                AppLocalDb.db.postDao().deletePost(post);
-
-                return "";
-            }
-        }.execute();
+    public interface UploadImageListener{
+        public void onComplete(String url);
     }
 
-    LiveData<List<Post>> data;
-
-    public LiveData<List<Post>> getAllPosts(){
-        data = AppLocalDb.db.postDao().getAllPosts();
-        refreshPostsList(null);
-        return data;
+    public void uploadImage(Bitmap imageBmp,String name, final UploadImageListener listener){
+        modelFirebase.uploadImage ( imageBmp,name,listener );
     }
-
-    void addPost(Post post){
-
-        AppLocalDb.db.postDao().insertAllPosts(post);
+    public interface AddPostListener{
+        void onComplete();
     }
+    public void addPost(Post post, AddPostListener listener){
+        modelFirebase.addPost(post,listener);
 
-
+    }
     public interface CompListener{
         void onComplete();
     }

@@ -12,19 +12,15 @@ import java.util.List;
 @Dao
 public interface PostDao {
     @Query("select * from Post")
-    LiveData<List<Post>> getAllPosts();
+    List<Post> getAll();
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAllPosts(Post...posts);
+    void insertAll(Post...posts);
 
     @Delete
     void deletePost(Post post);
 
-    @Query("select exists(select * from Post where postId = :postId)")
-    boolean isPostExists(String postId);
 
-    @Query("delete from Post where postId = :postId")
-    void deleteByPostId(String postId);
 
 }

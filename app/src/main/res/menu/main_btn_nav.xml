@@ -4,12 +4,12 @@
 
 
     <item
-        android:id="@+id/list"
+        android:id="@+id/postListFragment2"
         android:icon="@drawable/ic_action_home"
         android:title="Feed"
         app:showAsAction="never" />
     <item
-        android:id="@+id/post"
+        android:id="@+id/addPostFragment"
         android:icon="@drawable/ic_action_add"
         android:title="Post"
         app:showAsAction="never" />

@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,36 +23,28 @@ import androidx.navigation.Navigation;
 import com.example.eat.R;
 import com.example.eat.mobel.Model;
 import com.example.eat.mobel.Post;
-import com.example.eat.mobel.StoreModel;
 import com.example.eat.mobel.User;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
-import java.text.BreakIterator;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
-public class PostFragment extends Fragment {
+public class AddPostFragment extends Fragment {
     View view;
     ProgressBar progressBar;
     EditText postTitleInput;
     EditText postContentInput;
-    EditText contactInput;
     ImageView postImageView;
     Uri postImgUri;
     Bitmap postImgBitmap;
-    static int REQUEST_CODE = 1;
-
-    public PostFragment() {
-        // Required empty public constructor
-    }
+    static int REQUEST_CODE=1;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView ( LayoutInflater inflater , ViewGroup container ,
+                               Bundle savedInstanceState ) {
         view = inflater.inflate(R.layout.fragment_post, container, false);
 
         progressBar = view.findViewById(R.id.new_post_fragment_progress_bar);
@@ -61,7 +52,6 @@ public class PostFragment extends Fragment {
         postImageView = view.findViewById(R.id.new_post_fragment_image_view);
         postTitleInput = view.findViewById(R.id.new_post_fragment_title_edit_text);
         postContentInput = view.findViewById(R.id.new_post_fragment_content_edit_text);
-        contactInput = view.findViewById(R.id.new_post_fragment_contact_edit_text);
 
         postImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +64,7 @@ public class PostFragment extends Fragment {
         publishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( postTitleInput != null && postContentInput != null && contactInput != null)
+                if ( postTitleInput != null && postContentInput != null)
                     savePost();
                 else
                     Toast.makeText(getContext(), "Please fill all fields and add a photo", Toast.LENGTH_SHORT).show();
@@ -82,57 +72,62 @@ public class PostFragment extends Fragment {
         });
 
         return view;
+
     }
 
-    void savePost(){
-        progressBar.setVisibility(View.VISIBLE);
-        final Post newPost = generateNewPost();
+    private void savePost ( ) {
+        progressBar.setVisibility ( View.VISIBLE );
+        Post post= new Post ();
+        post.postid= UUID.randomUUID ().toString ();
+        post.posttitle = postTitleInput.getText ().toString ();
+        post.postinfo = postContentInput.getText ().toString ();
+        post.postImgUrl=null;
+        post.userId = User.getInstance ().userId;
+        post.username = User.getInstance ().Username;
 
-        StoreModel.uploadImage(postImgBitmap, new StoreModel.Listener() {
-            @Override
-            public void onSuccess(String url) {
-                newPost.postImgUrl = url;
-                Model.instance.addPost(newPost, new Model.Listener<Boolean>() {
-                    @Override
-                    public void onComplete(Boolean data) {
-                        NavController navCtrl = Navigation.findNavController(view);
-                        navCtrl.navigateUp();
-                    }
-                });
-            }
 
+        Model.instance.uploadImage ( postImgBitmap ,post.postid, new Model.UploadImageListener ( ) {
             @Override
-            public void onFail() {
-                progressBar.setVisibility(View.INVISIBLE);
-                Snackbar.make(view, "Failed to create post and save it in databases", Snackbar.LENGTH_LONG).show();
+            public void onComplete ( String url ) {
+                if(url==null){
+                    progressBar.setVisibility ( View.INVISIBLE );
+                    Snackbar.make ( view,"Faild to create post" , Snackbar.LENGTH_LONG).show ();
+                }else{
+                    post.setPostImgUrl ( url );
+                    Model.instance.addPost ( post , new Model.AddPostListener ( ) {
+                        @Override
+                        public void onComplete ( ) {
+                            NavController navController = Navigation.findNavController ( view );
+                            navController.navigateUp ();
+                        }
+                    } );
+                }
             }
-        });
+        } );
     }
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     void chooseImageFromGallery(){
         try{
             Intent openGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-            openGalleryIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            openGalleryIntent.setDataAndType( MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
 
             startActivityForResult(openGalleryIntent, REQUEST_CODE);
         }
         catch (Exception e){
             Toast.makeText(getActivity(), "New post Page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+//        Intent takePictureIntent = new Intent(
+//                MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (takePictureIntent.resolveActivity(getActivity ().getPackageManager()) != null) {
+//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//        }
     }
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    final static int RESAULT_SUCCESS = 0;
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(
-                MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+    public void onActivityResult(int requestCode, int resultCode,  Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(data.getData() != null && data != null && resultCode == RESULT_OK) {
+        if(data.getData() != null  && resultCode == RESULT_OK) {
             postImgUri = data.getData();
             postImageView.setImageURI(postImgUri);
             postImgBitmap = uriToBitmap(postImgUri);
@@ -142,22 +137,9 @@ public class PostFragment extends Fragment {
         }
     }
 
-    private Post generateNewPost(){
-        Post newPost = new Post();
-        newPost.postid = UUID.randomUUID().toString();
-        newPost.posttitle = postTitleInput.getText().toString();
-        newPost.postinfo = postContentInput.getText().toString();
-        newPost.postImgUrl = null;
-        newPost.userId = User.getInstance().userId;
-
-        newPost.username = User.getInstance().Username;
-        newPost.contact = contactInput.getText().toString();
-        return newPost;
-    }
-
-    private Bitmap uriToBitmap(Uri selectedFileUri) {
+    private Bitmap uriToBitmap ( Uri postImgUri ) {
         try {
-            ParcelFileDescriptor parcelFileDescriptor = getContext().getContentResolver().openFileDescriptor(selectedFileUri, "r");
+            ParcelFileDescriptor parcelFileDescriptor = getContext().getContentResolver().openFileDescriptor(postImgUri, "r");
             FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
             Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
             parcelFileDescriptor.close();
@@ -168,5 +150,4 @@ public class PostFragment extends Fragment {
         }
         return null;
     }
-
 }
