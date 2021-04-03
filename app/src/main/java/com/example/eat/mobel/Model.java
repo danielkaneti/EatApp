@@ -4,6 +4,7 @@ package com.example.eat.mobel;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 
@@ -29,6 +30,13 @@ public class Model {
     public void getAllPost(final GetAllPostListener listener){
         modelFirebase.getAllPost(listener);
 
+    }
+    public interface UploadImageListener{
+        public void onComplete(String url);
+    }
+
+    public void uploadImage(Bitmap imageBmp,String name, final UploadImageListener listener){
+        modelFirebase.uploadImage ( imageBmp,name,listener );
     }
     public interface AddPostListener{
         void onComplete();

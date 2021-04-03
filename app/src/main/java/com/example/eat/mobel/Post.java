@@ -77,5 +77,26 @@ public class Post implements Serializable {
 
 
 
+    public Post ( @NonNull String postid , String postinfo , String posttitle , String postImgUrl , String userId , String username , long lastUpdated ) {
+        this.postid = postid;
+        this.postinfo = postinfo;
+        this.posttitle = posttitle;
+        this.postImgUrl = postImgUrl;
+        this.userId = userId;
+        this.username = username;
+        this.lastUpdated = lastUpdated;
+    }
+
+    public Post(){
+        postid = "";
+        posttitle = "";
+        postinfo = "";
+        postImgUrl = "";
+        userId = "";
+        username = "";
+        lastUpdated =0;
+    }
+
+
 
 }

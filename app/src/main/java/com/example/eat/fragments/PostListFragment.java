@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.example.eat.R;
 import com.example.eat.mobel.Model;
 import com.example.eat.mobel.Post;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -108,13 +110,28 @@ public class PostListFragment extends Fragment {
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView postId;
-        ImageView image;
+        TextView postTitle;
+        TextView userName;
+        ImageView postimage;
+        ProgressBar pb;
+        Post post;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            postId = itemView.findViewById(R.id.listrow_textv);
-            image = itemView.findViewById(R.id.imageView);
+            postTitle = itemView.findViewById(R.id.row_post_title_text_view);
+            postimage = itemView.findViewById(R.id.row_post_image_view);
+            userName = itemView.findViewById ( R.id.row_username_text_view );
+            pb = itemView.findViewById ( R.id.row_post_progress_bar );
+
+
+        }
+        public void bind(Post postToBind){
+            postTitle.setText(postToBind.posttitle);
+            userName.setText(postToBind.username);
+            post = postToBind;
+            if (postToBind.postImgUrl != null ){
+                Picasso.get().load(postToBind.postImgUrl).noPlaceholder().into(postimage);
+            }
         }
     }
 
@@ -132,7 +149,7 @@ public class PostListFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             Post post = postList.get(position);
-            holder.postId.setText(post.getPostid());
+            holder.bind ( post );
         }
 
         @Override
