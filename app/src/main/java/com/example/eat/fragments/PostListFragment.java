@@ -66,31 +66,31 @@ public class PostListFragment extends Fragment {
 
         //postList = Model.instance.getAllPost();
 
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNewPost();
-                Log.d("id = ", "hello ");
-            }
-        });
+//        addBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                addNewPost();
+//                Log.d("id = ", "hello ");
+//            }
+//        });
         reloadData();
         return view;
     }
 
     static int id = 0;
 
-    private void addNewPost() {
-        Post post = new Post();
-        post.setPostid("" + id);
-        post.setPosttitle("name" + id);
-        Model.instance.addPost(post, new Model.AddPostListener() {
-            @Override
-            public void onComplete() {
-                reloadData();
-            }
-        });
-        id++;
-    }
+//    private void addNewPost() {
+//        Post post = new Post();
+//        post.setPostid("" + id);
+//        post.setPosttitle("name" + id);
+//        Model.instance.addPost(post, new Model.AddPostListener() {
+//            @Override
+//            public void onComplete() {
+//                reloadData();
+//            }
+//        });
+//        id++;
+//    }
 
     void reloadData() {
         //pb.setVisibility ( View.VISIBLE );

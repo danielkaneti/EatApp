@@ -9,16 +9,7 @@
         android:id="@+id/postListFragment2"
         android:name="com.example.eat.fragments.PostListFragment"
         android:label="fragment_post_list"
-        tools:layout="@layout/fragment_post_list" />
-    <fragment
-        android:id="@+id/postDetailsFragment"
-        android:name="com.example.eat.fragments.PostDetailsFragment"
-        android:label="fragment_post_details"
-        tools:layout="@layout/fragment_post_details" >
-        <action
-            android:id="@+id/action_postDetailsFragment_pop"
-            app:popUpTo="@id/postListFragment2"
-            app:popUpToInclusive="true" />
+        tools:layout="@layout/fragment_post_list" >
         <argument
             android:name="postId"
             app:argType="string" />
