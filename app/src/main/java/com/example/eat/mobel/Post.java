@@ -4,7 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
 @Entity
 public class Post implements Serializable {
     @PrimaryKey
@@ -86,7 +92,28 @@ public class Post implements Serializable {
         this.username = username;
         this.lastUpdated = lastUpdated;
     }
+    public Map<String,Object> toMap(){
+        HashMap<String,Object> result = new HashMap<>();
+        result.put ( "postid", postid);
+        result.put ( "posttitle", posttitle);
+        result.put ( "postinfo", postinfo);
+        result.put ( "postImgUrl", postImgUrl);
+        result.put ( "userId", userId);
+        result.put ( "username", username);
+        result.put ( "lastUpdated", FieldValue.serverTimestamp () );
+        return result;
+    }
 
+    public void fromMap(Map<String,Object> map){
+        postid=(String)map.get ( "postid" );
+        posttitle=(String)map.get ( "posttitle" );
+        postinfo=(String)map.get ( "postinfo" );
+        postImgUrl=(String)map.get ( "postImgUrl" );
+        userId=(String)map.get ( "userId" );
+        username=(String)map.get ( "username" );
+        Timestamp ts=(Timestamp)map.get ( "lastUpdated" );
+        lastUpdated=ts.getSeconds ();
+    }
     public Post(){
         postid = "";
         posttitle = "";

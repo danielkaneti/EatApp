@@ -1,5 +1,6 @@
 package com.example.eat.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -45,6 +46,9 @@ public class PostListFragment extends Fragment {
         // Required empty public constructor
     }
 
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,16 +67,16 @@ public class PostListFragment extends Fragment {
 
         adapter = new MyAdapter();
         list.setAdapter(adapter);
+        adapter.setOnClickListener(new OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                Post post = postList.get(position);
+               PostListFragmentDirections.ActionPostListFragment2ToPostDetails action = PostListFragmentDirections.actionPostListFragment2ToPostDetails(post);
+                Navigation.findNavController(view).navigate(action);
+            }
+        });
 
-        //postList = Model.instance.getAllPost();
 
-//        addBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                addNewPost();
-//                Log.d("id = ", "hello ");
-//            }
-//        });
         reloadData();
         return view;
     }
@@ -116,13 +120,23 @@ public class PostListFragment extends Fragment {
         ProgressBar pb;
         Post post;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             postTitle = itemView.findViewById(R.id.row_post_title_text_view);
             postimage = itemView.findViewById(R.id.row_post_image_view);
             userName = itemView.findViewById ( R.id.row_username_text_view );
             pb = itemView.findViewById ( R.id.row_post_progress_bar );
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION)
+                            listener.onClick(position);
+                    }
+                }
+            });
 
         }
         public void bind(Post postToBind){
@@ -134,15 +148,21 @@ public class PostListFragment extends Fragment {
             }
         }
     }
+    interface OnItemClickListener {
+        void onClick(int position);
+    }
 
     class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
+        private OnItemClickListener listener;
+
+        void setOnClickListener(OnItemClickListener listener){ this.listener=listener; }
 
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             //View view =getLayoutInflater ().inflate (R.layout.list_row,null );
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_row, parent, false);
-            MyViewHolder holder = new MyViewHolder(view);
+            MyViewHolder holder = new MyViewHolder(view,listener);
             return holder;
         }
 
