@@ -40,6 +40,7 @@ public class AddPostFragment extends Fragment {
     ImageView postImageView;
     Uri postImgUri;
     Bitmap postImgBitmap;
+    Button publishBtn;
     static int REQUEST_CODE=1;
 
     @Override
@@ -60,7 +61,7 @@ public class AddPostFragment extends Fragment {
             }
         });
 
-        Button publishBtn = view.findViewById(R.id.new_post_fragment_publish_btn);
+         publishBtn = view.findViewById(R.id.new_post_fragment_publish_btn);
         publishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -52,6 +52,12 @@ public class Model {
         void onComplete(T data);
     }
 
+    public interface GetPostListener {
+        void onComplete(Post p);
+    }
 
+    public void getPost (String id, GetPostListener listener){
+        modelFirebase.getPost ( id,  listener);
+    }
 
 }

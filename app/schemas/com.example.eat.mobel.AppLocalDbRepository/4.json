@@ -1,0 +1,76 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 4,
+    "identityHash": "4c0aeaff8161ee80dfec03257b84e25d",
+    "entities": [
+      {
+        "tableName": "Post",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`postid` TEXT NOT NULL, `postinfo` TEXT, `posttitle` TEXT, `postImgUrl` TEXT, `userId` TEXT, `username` TEXT, `contact` TEXT, `lastUpdated` INTEGER NOT NULL, PRIMARY KEY(`postid`))",
+        "fields": [
+          {
+            "fieldPath": "postid",
+            "columnName": "postid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "postinfo",
+            "columnName": "postinfo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "posttitle",
+            "columnName": "posttitle",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "postImgUrl",
+            "columnName": "postImgUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "username",
+            "columnName": "username",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contact",
+            "columnName": "contact",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastUpdated",
+            "columnName": "lastUpdated",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "postid"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4c0aeaff8161ee80dfec03257b84e25d')"
+    ]
+  }
+}

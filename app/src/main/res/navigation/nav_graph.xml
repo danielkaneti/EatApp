@@ -9,23 +9,24 @@
         android:id="@+id/postListFragment2"
         android:name="com.example.eat.fragments.PostListFragment"
         android:label="fragment_post_list"
-        tools:layout="@layout/fragment_post_list" />
-    <fragment
-        android:id="@+id/postDetailsFragment"
-        android:name="com.example.eat.fragments.PostDetailsFragment"
-        android:label="fragment_post_details"
-        tools:layout="@layout/fragment_post_details" >
+        tools:layout="@layout/fragment_post_list" >
+
         <action
-            android:id="@+id/action_postDetailsFragment_pop"
-            app:popUpTo="@id/postListFragment2"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="postId"
-            app:argType="string" />
+            android:id="@+id/action_postListFragment2_to_postDetails"
+            app:destination="@id/postDetails" />
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
         android:name="com.example.eat.fragments.AddPostFragment"
         android:label="fragment_add_post"
         tools:layout="@layout/fragment_add_post" />
+    <fragment
+        android:id="@+id/postDetails"
+        android:name="com.example.eat.PostDetails"
+        android:label="fragment_post_details2"
+        tools:layout="@layout/fragment_post_details2" >
+        <argument
+            android:name="post"
+            app:argType="com.example.eat.mobel.Post" />
+    </fragment>
 </navigation>

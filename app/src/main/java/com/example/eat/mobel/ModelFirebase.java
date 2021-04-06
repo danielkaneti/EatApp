@@ -180,7 +180,24 @@ public class ModelFirebase {
 
     }
 
-
+    public void getPost ( String id ,final Model.GetPostListener listener ) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance ( );
+        db.collection ( "posts" ).document ( id ).get ().addOnCompleteListener ( new OnCompleteListener<DocumentSnapshot> ( ) {
+            @Override
+            public void onComplete ( @NonNull Task<DocumentSnapshot> task ) {
+                Post post= null;
+                if (task.isSuccessful ( )) {
+                    DocumentSnapshot doc = task.getResult ( );
+                    if(doc!=null) {
+                        post = new Post ();
+                        post.fromMap ( task.getResult ().getData () );
+                        //post = task.getResult ( ).toObject ( Post.class );
+                    }
+                }
+                listener.onComplete ( post );
+            }
+        });
+    }
     public interface Listener<T> {
         void onComplete();
         void onFail();
