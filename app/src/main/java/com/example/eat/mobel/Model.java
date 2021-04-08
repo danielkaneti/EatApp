@@ -1,12 +1,7 @@
 package com.example.eat.mobel;
 
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
-
 
 import java.util.List;
 
@@ -58,6 +53,14 @@ public class Model {
 
     public void getPost (String id, GetPostListener listener){
         modelFirebase.getPost ( id,  listener);
+    }
+
+    public void updateUserProfile(String username, String info, String profileImgUrl, Listener<Boolean> listener) {
+        ModelFirebase.updateUserProfile(username, info, profileImgUrl, listener);
+    }
+
+    public void setUserAppData(String email){
+        ModelFirebase.setUserAppData(email);
     }
 
 }

@@ -4,33 +4,26 @@ package com.example.eat.mobel;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.Continuation;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.example.eat.EatAppApplication;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.type.Date;
-
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -51,8 +44,6 @@ public class ModelFirebase {
                     for (DocumentSnapshot doc:task.getResult()) {
                         Post post=doc.toObject(Post.class);
                         data.add(post);
-
-                        
                     }
 
                 }
@@ -98,60 +89,6 @@ public class ModelFirebase {
         } catch (Exception e) {
             Toast.makeText(EatAppApplication.context, "Register page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             return null;
-        }
-    }
-
-    private static void uploadUserData(final String username, final String email, Uri imageUri){
-
-        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images");
-
-        if (imageUri != null){
-            String imageName = username + "." + getExtension(imageUri);
-            final StorageReference imageRef = storageReference.child(imageName);
-
-            UploadTask uploadTask = imageRef.putFile(imageUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()){
-                        throw task.getException();
-                    }
-                    return imageRef.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()){
-
-                        Map<String,Object> data = new HashMap<>();
-                        data.put("profileImageUrl", task.getResult().toString());
-                        data.put("username", username);
-                        data.put("email", email);
-                        data.put("info", "NA");
-                        firebaseFirestore.collection("userProfileData").document(email).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                if (firebaseAuth.getCurrentUser() != null){
-                                    firebaseAuth.signOut();
-                                }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(EatAppApplication.context, "Fails to create user and upload data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    else if (!task.isSuccessful()){
-                        Toast.makeText(EatAppApplication.context, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-        else {
-            Toast.makeText(EatAppApplication.context, "Please choose a profile image", Toast.LENGTH_SHORT).show();
         }
     }
     public void addPost(Post post, Model.AddPostListener listener) {
@@ -208,31 +145,38 @@ public class ModelFirebase {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-
-            firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        if(email != null && !email.equals ( "" ) && password !=null && !password.equals ( "" )) {
+            if(firebaseAuth.getCurrentUser () != null){
+                firebaseAuth.signOut ();
+            }
+            firebaseAuth.signInWithEmailAndPassword ( email , password ).addOnSuccessListener ( new OnSuccessListener<AuthResult> ( ) {
                 @Override
-                public void onSuccess(AuthResult authResult) {
-                    Toast.makeText(EatAppApplication.context, "Welcome!", Toast.LENGTH_SHORT).show();
-                    listener.onComplete();
+                public void onSuccess ( AuthResult authResult ) {
+                    Toast.makeText ( EatAppApplication.context , "Welcome!" , Toast.LENGTH_SHORT ).show ( );
+                    setUserAppData ( email );
+                    listener.onComplete ( );
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+            } ).addOnFailureListener ( new OnFailureListener ( ) {
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(EatAppApplication.context, "Failed to login: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    listener.onFail();
+                public void onFailure ( @NonNull Exception e ) {
+                    Toast.makeText ( EatAppApplication.context , "Failed to login: " + e.getMessage ( ) , Toast.LENGTH_SHORT ).show ( );
+                    listener.onFail ( );
                 }
-            });
+            } );
 
-
+        }
+        else {
+            Toast.makeText ( EatAppApplication.context,"Please fill both data fields", Toast.LENGTH_SHORT ).show ();
+        }
     }
 
-    public static String getCurrentUserId() {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUser != null)
-            return firebaseUser.getUid();
-        return null;
-    }
-    public static void registerUserAccount(final String username, String password, final String email, final Listener<Boolean> listener){
+//    public static String getCurrentUserId() {
+//        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//        if (firebaseUser != null)
+//            return firebaseUser.getUid();
+//        return null;
+//    }
+    public static void registerUserAccount(final String username, String password, final String email,final Uri imageUri ,final Listener<Boolean> listener){
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -242,28 +186,23 @@ public class ModelFirebase {
         if (mAuth.getCurrentUser() == null &&
                 username != null && !username.equals("") &&
                 password != null && !password.equals("") &&
-                email != null && !email.equals("")
-               ){
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                email != null && !email.equals("")&&
+                imageUri !=null){
+            mAuth.createUserWithEmailAndPassword ( email,password ).addOnSuccessListener ( new OnSuccessListener<AuthResult> ( ) {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful())
-                    {
-                        User user=new User(username,email);
-
-                        FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                String id = getCurrentUserId();
-
-
-                            }
-
-                        });
-                        listener.onComplete();
-                    }
+                public void onSuccess ( AuthResult authResult ) {
+                    Toast.makeText ( EatAppApplication.context, "User registered!",Toast.LENGTH_SHORT ).show ();
+                    uploadUserData (username,email,imageUri);
+                    listener.onComplete ();
                 }
-            });
+            } ).addOnFailureListener ( new OnFailureListener ( ) {
+                @Override
+                public void onFailure ( @NonNull Exception e ) {
+                    Toast.makeText ( EatAppApplication.context,"Failed registering user", Toast.LENGTH_SHORT ).show ();
+                    listener.onFail ();
+                }
+            } );
+
         }
         else {
             Toast.makeText(EatAppApplication.context, "Please fill all input fields and profile image", Toast.LENGTH_SHORT).show();
@@ -273,7 +212,99 @@ public class ModelFirebase {
 
     }
 
+    private static void uploadUserData(final String username, final String email, Uri imageUri){
 
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images");
+
+        if (imageUri != null){
+            String imageName = username + "." + getExtension(imageUri);
+            final StorageReference imageRef = storageReference.child(imageName);
+
+            UploadTask uploadTask = imageRef.putFile(imageUri);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()){
+                        throw task.getException();
+                    }
+                    return imageRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()){
+
+                        Map<String,Object> data = new HashMap<>();
+                        data.put("profileImageUrl", task.getResult().toString());
+                        data.put("username", username);
+                        data.put("email", email);
+                        data.put("info", "NA");
+                        firebaseFirestore.collection("userProfileData").document(email).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                if (firebaseAuth.getCurrentUser() != null){
+                                    firebaseAuth.signOut();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(EatAppApplication.context, "Fails to create user and upload data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else if (!task.isSuccessful()){
+                        Toast.makeText(EatAppApplication.context, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+        else {
+            Toast.makeText(EatAppApplication.context, "Please choose a profile image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void setUserAppData(final String email){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();;
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        db.collection("userProfileData").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    User.getInstance().Username = (String) task.getResult().get("username");
+                    User.getInstance().profileImageUrl = (String) task.getResult().get("profileImageUrl");
+                    User.getInstance().userInfo = (String) task.getResult().get("info");
+                    User.getInstance().userEmail = email;
+                    User.getInstance().userId = firebaseAuth.getUid();
+                }
+            }
+        });
+    }
+
+    public static void updateUserProfile(String username, String info, String profileImgUrl, final Model.Listener<Boolean> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> json = new HashMap<>();
+        if (username != null)
+            json.put("username", username);
+        else json.put("username", User.getInstance().Username);
+        if (info != null)
+            json.put("info", info);
+        else json.put("info", User.getInstance().userInfo);
+        if (profileImgUrl != null)
+            json.put("profileImageUrl", profileImgUrl);
+        else json.put("profileImageUrl", User.getInstance().profileImageUrl);
+        json.put("email", User.getInstance().userEmail);
+
+        db.collection("userProfileData").document(User.getInstance().userEmail).set(json).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (listener != null)
+                    listener.onComplete(task.isSuccessful());
+            }
+        });
+    }
 
 
 }

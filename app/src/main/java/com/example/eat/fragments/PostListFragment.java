@@ -1,9 +1,6 @@
 package com.example.eat.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,21 +12,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.eat.HomeActivity;
-import com.example.eat.Login;
 import com.example.eat.R;
-
 import com.example.eat.mobel.Model;
 import com.example.eat.mobel.Post;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
@@ -61,9 +50,7 @@ public class PostListFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         list.setLayoutManager(layoutManager);
 
-        //pb = view.findViewById ( R.id.postlistfrag_progbar );
         addBtn = view.findViewById(R.id.postlist_frag_addbtn);
-        //pb.setVisibility ( View.INVISIBLE );
 
         adapter = new MyAdapter();
         list.setAdapter(adapter);
@@ -81,7 +68,7 @@ public class PostListFragment extends Fragment {
         return view;
     }
 
-    static int id = 0;
+//    static int id = 0;
 
 //    private void addNewPost() {
 //        Post post = new Post();

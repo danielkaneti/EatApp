@@ -23,7 +23,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             app:srcCompat="@drawable/eatapp_logo" />
         <EditText
             android:id="@+id/register_activity_user_edit_text"
@@ -66,6 +66,23 @@
             android:textColor="@color/black"
             android:textColorHint="#150E0E" />
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/register_activity_profile_image_view"
+            android:layout_width="88dp"
+            android:layout_height="82dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="16dp"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_pic_placeholder"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/register_activity_logo_image_view"
+            app:layout_constraintStart_toStartOf="@+id/register_activity_logo_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/register_activity_logo_image_view"
+            app:srcCompat="@drawable/profile_pic_placeholder"
+            tools:srcCompat="@drawable/profile_pic_placeholder" />
+
         <Button
             android:id="@+id/register_newaccount_btn"
             android:layout_width="match_parent"
@@ -76,7 +93,10 @@
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
             android:text="Register"
-            app:backgroundTint="#306A98" />
+            android:visibility="visible"
+            app:backgroundTint="#306A98"
+            tools:visibility="visible" />
+
         <ProgressBar
             android:id="@+id/register_activity_progress_bar"
             style="?android:attr/progressBarStyle"
