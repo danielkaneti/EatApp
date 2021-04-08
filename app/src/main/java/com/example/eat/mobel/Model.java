@@ -1,6 +1,7 @@
 package com.example.eat.mobel;
 
 
+<<<<<<< Updated upstream
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,6 +15,8 @@ public class Model {
 
 //    public final static Model Instance=new Model();
 //    public static Model instance;
+=======
+>>>>>>> Stashed changes
     ModelFirebase modelFirebase=new ModelFirebase();
     ModelSql modelSql=new ModelSql();
     public  final static Model instance=new Model();
@@ -24,6 +27,7 @@ public class Model {
 
 
 
+<<<<<<< Updated upstream
     public interface GetAllPostListener {
         void onComplete(List<Post> data);
     }
@@ -51,6 +55,8 @@ public class Model {
     public interface Listener<T>{
         void onComplete(T data);
     }
+=======
+>>>>>>> Stashed changes
 
     public interface GetPostListener {
         void onComplete(Post p);
@@ -60,4 +66,5 @@ public class Model {
         modelFirebase.getPost ( id,  listener);
     }
 
+}
 }
