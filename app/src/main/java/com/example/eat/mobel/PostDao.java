@@ -11,16 +11,21 @@ import java.util.List;
 
 @Dao
 public interface PostDao {
+
     @Query("select * from Post")
-    List<Post> getAll();
+    LiveData<List<Post>> getAllPosts();
 
-
+    //inserting and updating
+    //... is used when we don't know how many arguments will pass..it can be 0 posts, 1 or more...
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(Post...posts);
+    void insertAllPosts(Post...posts);
 
     @Delete
     void deletePost(Post post);
 
+    @Query("select exists(select * from Post where postId = :postId)")
+    boolean isPostExists(String postId);
 
-
+    @Query("delete from Post where postId = :postId")
+    void deleteByPostId(String postId);
 }

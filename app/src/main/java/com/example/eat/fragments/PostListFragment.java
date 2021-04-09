@@ -1,5 +1,6 @@
 package com.example.eat.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,12 +10,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import androidx.lifecycle.Observer;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.eat.R;
 import com.example.eat.mobel.Model;
@@ -26,22 +30,31 @@ import java.util.List;
 
 public class PostListFragment extends Fragment {
     RecyclerView list;
-    List<Post> postList = new LinkedList<>();
-    //ProgressBar pb;
-    Button addBtn;
+    List<Post> data = new LinkedList<>();
+    PostListViewModel viewModel;
     MyAdapter adapter;
+    LiveData<List<Post>> liveData;
 
     public PostListFragment() {
         // Required empty public constructor
     }
 
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        viewModel=new ViewModelProvider(this).get(PostListViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_post_list, container, false);
 
         RecyclerView list = view.findViewById(R.id.postlist_recycler_v);
@@ -50,51 +63,72 @@ public class PostListFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         list.setLayoutManager(layoutManager);
 
-        addBtn = view.findViewById(R.id.postlist_frag_addbtn);
 
         adapter = new MyAdapter();
         list.setAdapter(adapter);
         adapter.setOnClickListener(new OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                Post post = postList.get(position);
+                Post post = data.get(position);
                PostListFragmentDirections.ActionPostListFragment2ToPostDetails action = PostListFragmentDirections.actionPostListFragment2ToPostDetails(post);
                 Navigation.findNavController(view).navigate(action);
             }
         });
+        liveData = viewModel.getData();
+        liveData.observe(getViewLifecycleOwner(), new Observer<List<Post>>() {
+            @Override
+            public void onChanged(List<Post> posts) {
+                List<Post> reversedData = reverseData(posts);
+                data = reversedData;
+                adapter.notifyDataSetChanged();
+            }
+        });
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.feed_list_swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewModel.refresh(new Model.CompListener() {
+                    @Override
+                    public void onComplete() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        });
 
+viewModel.refresh(new Model.CompListener() {
+    @Override
+    public void onComplete() {
 
-        reloadData();
+    }
+});
+
+        //reloadData();
         return view;
     }
 
-//    static int id = 0;
+    private List<Post> reverseData(List<Post> posts) {
+        List<Post> reversedData = new LinkedList<>();
+        for (Post post: posts) {
+            reversedData.add(0, post);
+        }
+        return reversedData;
+    }
 
-//    private void addNewPost() {
-//        Post post = new Post();
-//        post.setPostid("" + id);
-//        post.setPosttitle("name" + id);
-//        Model.instance.addPost(post, new Model.AddPostListener() {
-//            @Override
-//            public void onComplete() {
-//                reloadData();
-//            }
-//        });
-//        id++;
-//    }
+
 
     void reloadData() {
         //pb.setVisibility ( View.VISIBLE );
-        addBtn.setEnabled(false);
+
         Model.instance.getAllPost(new Model.GetAllPostListener() {
             @Override
             public void onComplete(List<Post> data) {
-                postList = data;
+                //postList = data;
                 for (Post p : data) {
                     Log.d("TAG", "post id: " + p.getPostid());
                 }
                 //   pb.setVisibility ( View.INVISIBLE );
-                addBtn.setEnabled(true);
+
                 adapter.notifyDataSetChanged();
             }
         });
@@ -155,16 +189,16 @@ public class PostListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            Post post = postList.get(position);
+            Post post = data.get(position);
             holder.bind ( post );
         }
 
         @Override
         public int getItemCount() {
-            if(postList==null) {
+            if(data==null) {
                 return 0;
             }
-            return postList.size();
+            return data.size();
         }
     }
 }
