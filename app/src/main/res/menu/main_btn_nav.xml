@@ -14,7 +14,7 @@
         android:title="Post"
         app:showAsAction="never" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profileFragment2"
         android:icon="@drawable/ic_action_user"
         android:title="Profile"
         app:showAsAction="never" />
