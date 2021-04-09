@@ -23,6 +23,7 @@ public class Post implements Serializable {
     public String userId;
     public String username;
     public String contact;
+    public String userProfileImageUrl;
     public long lastUpdated;
 
 //seters
@@ -50,7 +51,11 @@ public class Post implements Serializable {
     public void setLastUpdated(long lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
-//geters
+    public String getUserProfileImageUrl() {return userProfileImageUrl; }
+
+    public void setUserProfileImageUrl(String userProfileImageUrl) { this.userProfileImageUrl = userProfileImageUrl; }
+
+    //geters
     public String getPostid() {
         return postid;
     }
@@ -83,37 +88,17 @@ public class Post implements Serializable {
 
 
 
-    public Post ( @NonNull String postid , String postinfo , String posttitle , String postImgUrl , String userId , String username , long lastUpdated ) {
+    public Post ( @NonNull String postid , String postinfo , String posttitle , String postImgUrl , String userId , String username , long lastUpdated ,String userProfileImageUrl) {
         this.postid = postid;
         this.postinfo = postinfo;
         this.posttitle = posttitle;
         this.postImgUrl = postImgUrl;
         this.userId = userId;
+        this.userProfileImageUrl=userProfileImageUrl;
         this.username = username;
         this.lastUpdated = lastUpdated;
     }
-    public Map<String,Object> toMap(){
-        HashMap<String,Object> result = new HashMap<>();
-        result.put ( "postid", postid);
-        result.put ( "posttitle", posttitle);
-        result.put ( "postinfo", postinfo);
-        result.put ( "postImgUrl", postImgUrl);
-        result.put ( "userId", userId);
-        result.put ( "username", username);
-        result.put ( "lastUpdated", FieldValue.serverTimestamp () );
-        return result;
-    }
 
-    public void fromMap(Map<String,Object> map){
-        postid=(String)map.get ( "postid" );
-        posttitle=(String)map.get ( "posttitle" );
-        postinfo=(String)map.get ( "postinfo" );
-        postImgUrl=(String)map.get ( "postImgUrl" );
-        userId=(String)map.get ( "userId" );
-        username=(String)map.get ( "username" );
-        Timestamp ts=(Timestamp)map.get ( "lastUpdated" );
-        lastUpdated=ts.getSeconds ();
-    }
     public Post(){
         postid = "";
         posttitle = "";
@@ -121,6 +106,7 @@ public class Post implements Serializable {
         postImgUrl = "";
         userId = "";
         username = "";
+        userProfileImageUrl="";
         lastUpdated =0;
     }
 

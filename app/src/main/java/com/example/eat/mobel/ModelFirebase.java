@@ -16,10 +16,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -33,6 +36,27 @@ import java.util.Map;
 
 public class ModelFirebase {
 
+
+    public static void getAllPostsSince(long lastUpdated, Model.Listener<List<Post>> listListener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Timestamp ts = new Timestamp(lastUpdated,0);
+        db.collection("posts").whereGreaterThanOrEqualTo("lastUpdated", ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Post> postsData = null;
+                if (task.isSuccessful()){
+                    postsData = new LinkedList<Post>();
+                    for(QueryDocumentSnapshot doc : task.getResult()){
+                        Map<String,Object> json = doc.getData();
+                        Post posts = factory(json);
+                        postsData.add(posts);
+                    }
+                }
+                listListener.onComplete(postsData);
+                Log.d("TAG","refresh " + postsData.size());
+            }
+        });
+    }
 
     public void getAllPost(Model.GetAllPostListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -91,16 +115,23 @@ public class ModelFirebase {
             return null;
         }
     }
+    private static Map<String, Object> toJson(Post post){
+        HashMap<String, Object> json = new HashMap<>();
+        json.put("postId", post.postid);
+        json.put("postTitle", post.posttitle);
+        json.put("postContent", post.postinfo);
+        json.put("postImgUrl", post.postImgUrl);
+        json.put("userId", post.userId);
+        json.put("userProfilePicUrl", post.userProfileImageUrl);
+        json.put("username", post.username);
+        json.put("contact", post.contact);
+        json.put("lastUpdated", FieldValue.serverTimestamp());
+        return json;
+    }
     public void addPost(Post post, Model.AddPostListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // Create a new user with a first and last name
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("first", "Ada");
-//        data.put("last", "Lovelace");
-//        data.put("born", 1815);
 
-// Add a new document with a generated ID
-        db.collection("posts").document(post.getPostid()).set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("posts").document(post.getPostid()).set(toJson(post)).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("Tag","post add ");
@@ -116,25 +147,39 @@ public class ModelFirebase {
 
 
     }
-
-    public void getPost ( String id ,final Model.GetPostListener listener ) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance ( );
-        db.collection ( "posts" ).document ( id ).get ().addOnCompleteListener ( new OnCompleteListener<DocumentSnapshot> ( ) {
-            @Override
-            public void onComplete ( @NonNull Task<DocumentSnapshot> task ) {
-                Post post= null;
-                if (task.isSuccessful ( )) {
-                    DocumentSnapshot doc = task.getResult ( );
-                    if(doc!=null) {
-                        post = new Post ();
-                        post.fromMap ( task.getResult ().getData () );
-                        //post = task.getResult ( ).toObject ( Post.class );
-                    }
-                }
-                listener.onComplete ( post );
-            }
-        });
+    private static Post factory(Map<String, Object> json){
+        Post newPost = new Post();
+        newPost.postid = (String) json.get("postId");
+        newPost.posttitle = (String) json.get("postTitle");
+        newPost.postinfo = (String) json.get("postContent");
+        newPost.postImgUrl = (String) json.get("postImgUrl");
+        newPost.userId = (String) json.get("userId");
+        newPost.userProfileImageUrl = (String) json.get("userProfilePicUrl");
+        newPost.username = (String) json.get("username");
+        newPost.contact = (String) json.get("contact");
+        Timestamp ts = (Timestamp)json.get("lastUpdated");
+        if (ts != null)
+            newPost.lastUpdated = ts.getSeconds();
+        return newPost;
     }
+//    public void getPost ( String id ,final Model.GetPostListener listener ) {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance ( );
+//        db.collection ( "posts" ).document ( id ).get ().addOnCompleteListener ( new OnCompleteListener<DocumentSnapshot> ( ) {
+//            @Override
+//            public void onComplete ( @NonNull Task<DocumentSnapshot> task ) {
+//                Post post= null;
+//                if (task.isSuccessful ( )) {
+//                    DocumentSnapshot doc = task.getResult ( );
+//                    if(doc!=null) {
+//                        post = new Post ();
+//                        post.fromMap ( task.getResult ().getData () );
+//                        //post = task.getResult ( ).toObject ( Post.class );
+//                    }
+//                }
+//                listener.onComplete ( post );
+//            }
+//        });
+//    }
     public interface Listener<T> {
         void onComplete();
         void onFail();
