@@ -70,6 +70,7 @@ public class PostListFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 Post post = data.get(position);
+
                PostListFragmentDirections.ActionPostListFragment2ToPostDetails action = PostListFragmentDirections.actionPostListFragment2ToPostDetails(post);
                 Navigation.findNavController(view).navigate(action);
             }

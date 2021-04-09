@@ -118,11 +118,7 @@ public class AddPostFragment extends Fragment {
         catch (Exception e){
             Toast.makeText(getActivity(), "New post Page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-//        Intent takePictureIntent = new Intent(
-//                MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (takePictureIntent.resolveActivity(getActivity ().getPackageManager()) != null) {
-//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-//        }
+
     }
 
     public void onActivityResult(int requestCode, int resultCode,  Intent data) {

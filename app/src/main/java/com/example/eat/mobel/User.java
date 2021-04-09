@@ -11,7 +11,7 @@ public class User implements Serializable {
     public String userInfo;
 
 
-    private User(){
+    public User(){
         Username=null;
         userEmail=null;
         userId=null;
