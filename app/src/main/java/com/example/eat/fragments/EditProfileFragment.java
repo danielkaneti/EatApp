@@ -44,7 +44,7 @@ public class EditProfileFragment extends Fragment {
     View view;
 
     CircleImageView profilePicImageView;
-    EditText usernameInput;
+
     EditText infoInput;
     Button saveProfileBtn;
     ImageButton closeBtn;
@@ -64,7 +64,7 @@ public class EditProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
         profilePicImageView = view.findViewById(R.id.edit_profile_fragment_profile_image_view);
-        usernameInput = view.findViewById(R.id.edit_profile_fragment_username_edit_text);
+
         infoInput = view.findViewById(R.id.edit_profile_fragment_info_edit_text);
         progressBar = view.findViewById(R.id.edit_profile_fragment_progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
@@ -100,7 +100,7 @@ public class EditProfileFragment extends Fragment {
         if (User.getInstance().profileImageUrl != null) {
             Picasso.get().load(User.getInstance().profileImageUrl).noPlaceholder().into(profilePicImageView);
         }
-        usernameInput.setHint(User.getInstance().Username);
+
         infoInput.setHint(User.getInstance().userInfo);
     }
 
@@ -109,34 +109,45 @@ public class EditProfileFragment extends Fragment {
         final String info;
 
 
-        progressBar.setVisibility(View.VISIBLE);
-        if (usernameInput.getText().toString() != null && !usernameInput.getText().toString().equals(""))
-            username = usernameInput.getText().toString();
-        else username = User.getInstance().Username;
-        if (infoInput.getText().toString() != null && !infoInput.getText().toString().equals(""))
-            info = infoInput.getText().toString();
-        else info = User.getInstance().userInfo;
+            progressBar.setVisibility(View.VISIBLE);
 
+            if (infoInput.getText().toString() != null && !infoInput.getText().toString().equals(""))
+                info = infoInput.getText().toString();
+            else info = User.getInstance().userInfo;
 
-        Model.instance.uploadImage(postImgBitmap, User.getInstance().Username, new Model.UploadImageListener() {
-            @Override
-            public void onComplete(String url) {
-                if (url == null) {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Snackbar.make(view, "Faild ", Snackbar.LENGTH_LONG).show();
-                } else {
-                    Model.instance.updateUserProfile(username, info, url, new Model.Listener<Boolean>() {
-                        @Override
-                        public void onComplete(Boolean data) {
-                            Model.instance.setUserAppData(User.getInstance().userEmail);
-                            NavController navCtrl = Navigation.findNavController(view);
-                            navCtrl.navigateUp();
-                            navCtrl.navigateUp();
-                        }
-                    });
+        if (profileImageUrl != null) {
+            Model.instance.uploadImage(postImgBitmap, User.getInstance().Username, new Model.UploadImageListener() {
+                @Override
+                public void onComplete(String url) {
+                    if (url == null) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Snackbar.make(view, "Faild ", Snackbar.LENGTH_LONG).show();
+                    } else {
+                        Model.instance.updateUserProfile( info, url, new Model.Listener<Boolean>() {
+                            @Override
+                            public void onComplete(Boolean data) {
+                                Model.instance.setUserAppData(User.getInstance().userEmail);
+                                NavController navCtrl = Navigation.findNavController(view);
+                                navCtrl.navigateUp();
+                                navCtrl.navigateUp();
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
+
+       else {
+            Model.instance.updateUserProfile( info, null, new Model.Listener<Boolean>() {
+                @Override
+                public void onComplete(Boolean data) {
+                    Model.instance.setUserAppData(User.getInstance().userEmail);
+                    NavController navCtrl = Navigation.findNavController(view);
+                    navCtrl.navigateUp();
+                    navCtrl.navigateUp();
+                }
+            });
+        }
     }
 
     private void chooseImageFromGallery(){
