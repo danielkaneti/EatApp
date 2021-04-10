@@ -328,12 +328,10 @@ public class ModelFirebase {
         });
     }
 
-    public static void updateUserProfile(String username, String info, String profileImgUrl, final Model.Listener<Boolean> listener) {
+    public static void updateUserProfile( String info, String profileImgUrl, final Model.Listener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> json = new HashMap<>();
-        if (username != null)
-            json.put("username", username);
-        else json.put("username", User.getInstance().Username);
+
         if (info != null)
             json.put("info", info);
         else json.put("info", User.getInstance().userInfo);

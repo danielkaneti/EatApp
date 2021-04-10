@@ -100,8 +100,8 @@ public class Model {
 //        modelFirebase.getPost ( id,  listener);
 //    }
 
-    public void updateUserProfile(String username, String info, String profileImgUrl, Listener<Boolean> listener) {
-        ModelFirebase.updateUserProfile(username, info, profileImgUrl, listener);
+    public void updateUserProfile( String info, String profileImgUrl, Listener<Boolean> listener) {
+        ModelFirebase.updateUserProfile( info, profileImgUrl, listener);
     }
 
     public void setUserAppData(String email){
