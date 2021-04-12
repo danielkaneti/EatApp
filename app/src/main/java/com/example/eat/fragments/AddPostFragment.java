@@ -50,9 +50,9 @@ public class AddPostFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.new_post_fragment_progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
-        postImageView = view.findViewById(R.id.new_post_fragment_image_view);
-        postTitleInput = view.findViewById(R.id.new_post_fragment_title_edit_text);
-        postContentInput = view.findViewById(R.id.new_post_fragment_content_edit_text);
+        postImageView = view.findViewById(R.id.edit_post_fragment_image_view );
+        postTitleInput = view.findViewById(R.id.edit_post_fragment_title_edit_text );
+        postContentInput = view.findViewById(R.id.edit_post_fragment_content_edit_text );
 
         postImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +61,7 @@ public class AddPostFragment extends Fragment {
             }
         });
 
-         publishBtn = view.findViewById(R.id.new_post_fragment_publish_btn);
+         publishBtn = view.findViewById(R.id.edit_post_fragment_save_btn );
         publishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +95,13 @@ public class AddPostFragment extends Fragment {
                     Snackbar.make ( view,"Faild to create post" , Snackbar.LENGTH_LONG).show ();
                 }else{
                     post.setPostImgUrl ( url );
+                    Model.instance.addPost ( post , new Model.AddPostListener ( ) {
+                        @Override
+                        public void onComplete ( ) {
+                            NavController navController = Navigation.findNavController ( view );
+                            navController.navigateUp ();
+                        }
+                    } );
                     Model.instance.addPost ( post , new Model.AddPostListener ( ) {
                         @Override
                         public void onComplete ( ) {

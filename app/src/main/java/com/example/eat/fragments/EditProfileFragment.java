@@ -1,37 +1,30 @@
 package com.example.eat.fragments;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
-
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.eat.R;
 import com.example.eat.mobel.Model;
 import com.example.eat.mobel.User;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
 import com.squareup.picasso.Picasso;
 
 import java.io.FileDescriptor;
@@ -66,7 +59,7 @@ public class EditProfileFragment extends Fragment {
         profilePicImageView = view.findViewById(R.id.edit_profile_fragment_profile_image_view);
 
         infoInput = view.findViewById(R.id.edit_profile_fragment_info_edit_text);
-        progressBar = view.findViewById(R.id.edit_profile_fragment_progress_bar);
+        progressBar = view.findViewById(R.id.edit_post_fragment_progress_bar );
         progressBar.setVisibility(View.INVISIBLE);
 
         profilePicImageView.setOnClickListener(new View.OnClickListener() {

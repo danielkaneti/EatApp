@@ -3,6 +3,7 @@ package com.example.eat;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +34,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         emailInput = findViewById(R.id.register_activity_email_edit_text);
         username = findViewById(R.id.register_activity_user_edit_text);
-        profileImageView = findViewById ( R.id.register_activity_profile_image_view );
+        profileImageView = findViewById ( R.id.post_details_profile_image_view );
 
         profileImageView.setOnClickListener ( new View.OnClickListener ( ) {
             @Override
@@ -54,6 +55,7 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onComplete() {
                         progressBar.setVisibility(View.INVISIBLE);
+                        Log.d ( "TAG", "user registered");
                         Register.this.finish();
 
                     }
@@ -61,6 +63,7 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onFail() {
                         progressBar.setVisibility(View.INVISIBLE);
+                        Log.d ( "TAG", "failed");
                     }
                 });
 

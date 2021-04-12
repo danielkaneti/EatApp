@@ -67,7 +67,7 @@
             android:textColorHint="#150E0E" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/register_activity_profile_image_view"
+            android:id="@+id/post_details_profile_image_view"
             android:layout_width="88dp"
             android:layout_height="82dp"
             android:layout_marginStart="120dp"

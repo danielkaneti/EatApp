@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1A4157"
-    tools:context=".PostDetails" >
+    tools:context=".fragments.PostDetailsFragment" >
 
     <ImageView
         android:id="@+id/post_details_fragment_post_image_view"
@@ -46,22 +46,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/post_details_profile_image_view"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_pic_placeholder"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@+id/post_details_fragment_username_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_activity_logo_image_view"
+            app:srcCompat="@drawable/profile_pic_placeholder"
+            tools:srcCompat="@drawable/profile_pic_placeholder" />
+
 
         <TextView
             android:id="@+id/post_details_fragment_username_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginEnd="278dp"
-            android:layout_marginRight="278dp"
-            android:layout_marginBottom="13dp"
-
             android:text="username"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/post_details_fragment_close_btn"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/post_details_fragment_close_btn"
+            app:layout_constraintHorizontal_bias="0.18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.461" />
 
         <ImageButton
             android:id="@+id/post_details_fragment_close_btn"
@@ -91,6 +105,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/post_details_fragment_post_image_view" />
 
+    <Button
+        android:id="@+id/post_details_fragment_edit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:text="EDIT POST"
+        app:layout_constraintEnd_toStartOf="@+id/post_details_fragment_delete_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_details_fragment_post_content_text_view" />
+
+    <Button
+        android:id="@+id/post_details_fragment_delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="40dp"
+        android:text="DELETE POST"
+        app:layout_constraintStart_toEndOf="@+id/post_details_fragment_edit_btn"
+        app:layout_constraintTop_toBottomOf="@+id/post_details_fragment_post_content_text_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

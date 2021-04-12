@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -54,13 +55,33 @@ public class Model {
                     @Override
                     protected void onPostExecute(String s) {
                         super.onPostExecute(s);
-                     //   cleanLocalDb();
+                        cleanLocalDb();
                         if (listener!=null)
                             listener.onComplete();
                     }
                 }.execute("");
             }
+
         });
+    }
+
+
+    private void cleanLocalDb ( ) {
+            ModelFirebase.getDeletedPostsId(new Listener<List<String>>() {
+                @Override
+                public void onComplete(final List<String> data) {
+                    new AsyncTask<String,String,String>() {
+                        @Override
+                        protected String doInBackground(String... strings) {
+                            for (String id: data){
+                                Log.d("TAG", "deleted id: " + id);
+                                AppLocalDb.db.postDao().deleteByPostId(id);
+                            }
+                            return "";
+                        }
+                    }.execute("");
+                }
+            });
     }
 
 
@@ -83,8 +104,23 @@ public class Model {
     }
     public void addPost(Post post, AddPostListener listener){
         modelFirebase.addPost(post,listener);
-
     }
+
+    public interface DeleteImageListener{
+        void onSuccess ( String s );
+        void onFail();
+    }
+
+    public void deleteImage(String imageUrl, final DeleteImageListener listener){
+        modelFirebase.deleteImage(imageUrl,listener);
+    }
+
+    public interface DeleteListener extends AddPostListener { }
+
+    public void deletePost(Post post, DeleteListener listener) {
+        modelFirebase.delete(post, listener);
+    }
+
     public interface CompListener{
         void onComplete();
     }

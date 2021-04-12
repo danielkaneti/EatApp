@@ -29,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -76,6 +77,8 @@ public class ModelFirebase {
         });
 
     }
+
+
     public void uploadImage(Bitmap imageBmp, String name, final Model.UploadImageListener listener){
 
        // Date date = new Date ();
@@ -144,8 +147,6 @@ public class ModelFirebase {
                 listener.onComplete();
             }
         });
-
-
     }
     private static Post factory(Map<String, Object> json){
         Post newPost = new Post();
@@ -162,7 +163,66 @@ public class ModelFirebase {
             newPost.lastUpdated = ts.getSeconds();
         return newPost;
     }
-//    public void getPost ( String id ,final Model.GetPostListener listener ) {
+
+    public void delete ( Post post , Model.DeleteListener listener ) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance ();
+
+        db.collection ( "posts" ).document ( post.getPostid () )
+                .delete ().addOnCompleteListener ( new OnCompleteListener<Void> ( ) {
+            @Override
+            public void onComplete ( @NonNull Task<Void> task ) {
+                Map<String,Object> deleted = new HashMap<> ();
+                deleted.put ( "postId", post.postid);
+                db.collection ( "deleted" ).document ( post.getPostid () ).set ( deleted ).addOnCompleteListener ( new OnCompleteListener<Void> ( ) {
+                    @Override
+                    public void onComplete ( @NonNull Task<Void> task ) {
+                        if(listener!=null)
+                        {
+                            listener.onComplete ();
+                        }
+                    }
+                } );
+            }
+        } );
+    }
+
+    public void deleteImage ( String imageUrl , Model.DeleteImageListener listener ) {
+        Date date = new Date();
+        FirebaseStorage storageReference = FirebaseStorage.getInstance ();
+        final StorageReference imageRef = storageReference.getReferenceFromUrl ( imageUrl );
+
+        imageRef.delete ().addOnSuccessListener ( new OnSuccessListener<Void> ( ) {
+            @Override
+            public void onSuccess ( Void aVoid ) {
+                listener.onSuccess ("");
+            }
+        } ).addOnFailureListener ( new OnFailureListener ( ) {
+            @Override
+            public void onFailure ( @NonNull Exception e ) {
+                listener.onFail ();
+            }
+        } );
+    }
+
+    public static void getDeletedPostsId(final Model.Listener<List<String>> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("deleted").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<String> deletedPostsIds = null;
+                if (task.isSuccessful()){
+                    deletedPostsIds = new LinkedList<String>();
+                    for(QueryDocumentSnapshot doc : task.getResult()){
+                        String deleted = (String) doc.getData().get("postId");
+                        deletedPostsIds.add(deleted);
+                    }
+                }
+                listener.onComplete(deletedPostsIds);
+            }
+        });
+    }
+
+    //    public void getPost ( String id ,final Model.GetPostListener listener ) {
 //        FirebaseFirestore db = FirebaseFirestore.getInstance ( );
 //        db.collection ( "posts" ).document ( id ).get ().addOnCompleteListener ( new OnCompleteListener<DocumentSnapshot> ( ) {
 //            @Override
@@ -244,6 +304,7 @@ public class ModelFirebase {
                 @Override
                 public void onFailure ( @NonNull Exception e ) {
                     Toast.makeText ( EatAppApplication.context,"Failed registering user", Toast.LENGTH_SHORT ).show ();
+                    Log.d ( "TAG", e.toString () );
                     listener.onFail ();
                 }
             } );

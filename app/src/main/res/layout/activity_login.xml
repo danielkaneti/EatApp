@@ -91,7 +91,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
-            android:text="Regesrer"
+            android:text="Register"
             app:backgroundTint="#306A98" />
         <ProgressBar
             android:id="@+id/Login_activity_progress_bar"
