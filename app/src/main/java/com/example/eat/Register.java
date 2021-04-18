@@ -34,7 +34,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         emailInput = findViewById(R.id.register_activity_email_edit_text);
         username = findViewById(R.id.register_activity_user_edit_text);
-        profileImageView = findViewById ( R.id.post_details_profile_image_view );
+        profileImageView = findViewById ( R.id.list_row_profile_image_view );
 
         profileImageView.setOnClickListener ( new View.OnClickListener ( ) {
             @Override

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#021732"
+    android:background="#FDE0B5"
     tools:context=".fragments.ProfileFragment">
 
     <ImageView
@@ -18,8 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/backgroundfit"
-        tools:srcCompat="@drawable/backgroundfit"
+        app:srcCompat="@drawable/background2"
+        tools:srcCompat="@drawable/background2"
         tools:visibility="visible" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_height="128dp"
         android:layout_marginTop="24dp"
         android:alpha="0.8"
-        android:background="#1C323E"
+        android:background="#FBBB5D"
         android:padding="10dp"
         android:text="Info info info info info info"
         android:textColor="#FFFFFF"
@@ -37,7 +37,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_fragment_email_text_view"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.136" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_fragment_profile_image_view"

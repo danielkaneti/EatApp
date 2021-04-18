@@ -2,7 +2,6 @@ package com.example.eat.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,12 +96,12 @@ public class PostListFragment extends Fragment {
             }
         });
 
-viewModel.refresh(new Model.CompListener() {
-    @Override
-    public void onComplete() {
+        viewModel.refresh(new Model.CompListener() {
+            @Override
+            public void onComplete() {
 
-    }
-});
+            }
+        });
 
         //reloadData();
         return view;
@@ -118,27 +117,28 @@ viewModel.refresh(new Model.CompListener() {
 
 
 
-    void reloadData() {
-        //pb.setVisibility ( View.VISIBLE );
-
-        Model.instance.getAllPost(new Model.GetAllPostListener() {
-            @Override
-            public void onComplete(List<Post> data) {
-                //postList = data;
-                for (Post p : data) {
-                    Log.d("TAG", "post id: " + p.getPostid());
-                }
-                //   pb.setVisibility ( View.INVISIBLE );
-
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
+//    void reloadData() {
+//        //pb.setVisibility ( View.VISIBLE );
+//
+//        Model.instance.getAllPost(new Model.GetAllPostListener() {
+//            @Override
+//            public void onComplete(List<Post> data) {
+//                //postList = data;
+//                for (Post p : data) {
+//                    Log.d("TAG", "post id: " + p.getPostid());
+//                }
+//                //   pb.setVisibility ( View.INVISIBLE );
+//
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
+//    }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView postTitle;
         TextView userName;
         ImageView postimage;
+ //       CircleImageView profileImage;
         ProgressBar pb;
         Post post;
 
@@ -147,6 +147,7 @@ viewModel.refresh(new Model.CompListener() {
             postTitle = itemView.findViewById(R.id.row_post_title_text_view);
             postimage = itemView.findViewById(R.id.row_post_image_view);
             userName = itemView.findViewById ( R.id.row_username_text_view );
+ //           profileImage = itemView.findViewById ( R.id.list_row_profile_image_view );
             pb = itemView.findViewById ( R.id.row_post_progress_bar );
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -165,8 +166,9 @@ viewModel.refresh(new Model.CompListener() {
             postTitle.setText(postToBind.posttitle);
             userName.setText(postToBind.username);
             post = postToBind;
-            if (postToBind.postImgUrl != null ){
+            if (postToBind.postImgUrl != null && postToBind.userProfileImageUrl!=null){
                 Picasso.get().load(postToBind.postImgUrl).noPlaceholder().into(postimage);
+//                Picasso.get ().load ( postToBind.userProfileImageUrl ).noPlaceholder ().into ( profileImage );
             }
         }
     }

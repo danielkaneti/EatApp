@@ -13,7 +13,7 @@
 
         <action
             android:id="@+id/action_postListFragment2_to_postDetails"
-            app:destination="@id/postDetails" />
+            app:destination="@id/PostDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
@@ -21,10 +21,13 @@
         android:label="fragment_add_post"
         tools:layout="@layout/fragment_add_post" />
     <fragment
-        android:id="@+id/postDetails"
-        android:name="com.example.eat.PostDetails"
+        android:id="@+id/PostDetailsFragment"
+        android:name="com.example.eat.fragments.PostDetailsFragment"
         android:label="fragment_post_details2"
         tools:layout="@layout/fragment_post_details2" >
+        <action
+            android:id="@+id/action_PostDetailsFragment_to_editPostFragment3"
+            app:destination="@id/editPostFragment3" />
         <argument
             android:name="post"
             app:argType="com.example.eat.mobel.Post" />
@@ -42,5 +45,14 @@
         <action
             android:id="@+id/action_profileFragment2_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPostFragment3"
+        android:name="com.example.eat.fragments.EditPostFragment"
+        android:label="fragment_edit_post"
+        tools:layout="@layout/fragment_edit_post" >
+        <argument
+            android:name="post"
+            app:argType="com.example.eat.mobel.Post" />
     </fragment>
 </navigation>

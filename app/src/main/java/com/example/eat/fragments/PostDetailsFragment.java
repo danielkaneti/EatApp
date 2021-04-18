@@ -48,7 +48,7 @@ public class PostDetailsFragment extends Fragment {
         username = view.findViewById(R.id.post_details_fragment_username_text_view);
         postContent = view.findViewById(R.id.post_details_fragment_post_content_text_view);
         postImg = view.findViewById(R.id.post_details_fragment_post_image_view);
-        profilePic = view.findViewById ( R.id.post_details_profile_image_view );
+//        profilePic = view.findViewById ( R.id.list_row_profile_image_view );
 
         post = PostDetailsFragmentArgs.fromBundle ( getArguments () ).getPost ();
         if(post!=null)
@@ -56,9 +56,9 @@ public class PostDetailsFragment extends Fragment {
             postTitle.setText ( post.posttitle );
             username.setText ( post.username );
             postContent.setText ( post.postinfo );
-            if(post.postImgUrl != null && post.userProfileImageUrl!=null){
+            if(post.postImgUrl != null ){
                 Picasso.get ().load ( post.postImgUrl ).noPlaceholder ().into ( postImg );
-//                Picasso.get ().load ( post.userProfileImageUrl ).noPlaceholder ().into ( profilePic );
+ //               Picasso.get ().load ( post.userProfileImageUrl ).noPlaceholder ().into ( profilePic );
             }
         }
         else{

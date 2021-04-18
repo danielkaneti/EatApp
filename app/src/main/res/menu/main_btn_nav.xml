@@ -5,8 +5,8 @@
 
     <item
         android:id="@+id/postListFragment2"
-        android:icon="@drawable/ic_action_home"
-        android:title="Feed"
+        android:icon="@drawable/home_activity_feedbtn_image_view"
+        android:title="Home"
         app:showAsAction="never" />
     <item
         android:id="@+id/addPostFragment"

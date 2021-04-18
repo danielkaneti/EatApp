@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundfit"
+    android:background="@drawable/background2"
     tools:context=".Register">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -13,30 +14,32 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="40dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp">
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/eatapp_logo" />
+            android:layout_height="240dp"
+            android:layout_marginTop="0dp"
+            app:srcCompat="@mipmap/eatapp_icon_2222_foreground" />
+
         <EditText
             android:id="@+id/register_activity_user_edit_text"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="0dp"
             android:drawableLeft="@drawable/ic_action_user"
             android:ems="10"
             android:hint="User name"
-            android:textColor="@color/black"
-            android:textColorHint="#150E0E" />
+            android:textColor="@color/white"
+            android:textColorHint="#FFFFFF" />
+
         <EditText
             android:id="@+id/register_activity_email_edit_text"
             android:layout_width="260dp"
@@ -48,8 +51,8 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:textColor="@color/black"
-            android:textColorHint="#150E0E" />
+            android:textColor="@color/white"
+            android:textColorHint="#FFFFFF" />
 
         <EditText
             android:id="@+id/register_activity_password_edit_text"
@@ -63,11 +66,11 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
-            android:textColor="@color/black"
-            android:textColorHint="#150E0E" />
+            android:textColor="@color/white"
+            android:textColorHint="#FFFFFF" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/post_details_profile_image_view"
+            android:id="@+id/list_row_profile_image_view"
             android:layout_width="88dp"
             android:layout_height="82dp"
             android:layout_marginStart="120dp"
@@ -89,12 +92,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
             android:text="Register"
             android:visibility="visible"
-            app:backgroundTint="#306A98"
+            app:backgroundTint="#FF6D3F"
             tools:visibility="visible" />
 
         <ProgressBar

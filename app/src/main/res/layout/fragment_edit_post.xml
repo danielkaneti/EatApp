@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F4A78F"
-    tools:context=".fragments.PostFragment">
+    tools:context=".fragments.AddPostFragment">
 
     <TextView
         android:id="@+id/edit_post_fragment_header_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="New Post"
+        android:text="Edit Post"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="37dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="24dp"
         android:background="#FF7E56"
         android:ems="10"
@@ -35,6 +35,7 @@
         android:textColorHint="#CDCDCD"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_post_fragment_header_text_view" />
 
@@ -43,7 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:background="#FF7E56"
         android:ems="10"
@@ -55,6 +56,7 @@
         android:textColorHint="#CDCDCD"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_post_fragment_title_edit_text" />
 
@@ -63,7 +65,7 @@
         android:layout_width="0dp"
         android:layout_height="39dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:background="#FF7E56"
         android:ems="10"
@@ -74,6 +76,7 @@
         android:textColorHint="#CDCDCD"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_post_fragment_content_edit_text" />
 
@@ -82,10 +85,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="24dp"
         android:background="#FF6D3F"
-        android:text="Publish"
+        android:text="Save Changes"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:backgroundTint="#FF6D3F"
@@ -99,7 +102,7 @@
         android:layout_width="0dp"
         android:layout_height="237dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="24dp"
         android:scaleType="centerCrop"
         android:src="@drawable/add_photo_icon"
@@ -108,26 +111,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_post_fragment_contact_edit_text" />
 
-    <ProgressBar
-        android:id="@+id/new_post_fragment_progress_bar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:alpha="0.8"
-        android:background="#1A4157"
-        android:hapticFeedbackEnabled="false"
-        android:padding="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
